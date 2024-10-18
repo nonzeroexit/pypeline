@@ -19,7 +19,9 @@ class Step:
     def ask_change_command(self):
         if input(f'Want to change command of {self.name} step?\n(Current command: {self.command})[n]: ') == 'y':
             self.command = input('New command: ')
-        log.add(f'* Command: {self.command}')
+            log.add(f'* Command: {self.command} **COMMAND WAS CHANGED**')
+        else:
+            log.add(f'* Command: {self.command}')
 
     def run(self):
         log.add(f'* Running: {self.final_command}')
