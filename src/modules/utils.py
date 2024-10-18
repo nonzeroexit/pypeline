@@ -4,6 +4,17 @@ import logging
 from datetime import datetime
 from classes.Step import Step
 
+def start_log(pipeline_name):
+    logging.basicConfig(
+        filename=pipeline_name.replace('.csv', '-log.md'),
+        level=logging.INFO,
+        format='%(message)s'
+    )
+
+def log(msg, add_date = False):
+    msg += f' {datetime.today().strftime("%y-%m-%d %H:%M")}' if add_date else ""
+    logging.info(msg)
+
 def ask_add_comment():
     comment = input('Comment to add to log[no-comments]: ')
     if comment:
