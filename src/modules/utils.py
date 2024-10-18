@@ -1,24 +1,12 @@
 import os
 import sys
-import logging
-from datetime import datetime
 from classes.Step import Step
-
-def start_log(pipeline_name):
-    logging.basicConfig(
-        filename=pipeline_name.replace('.csv', '-log.md'),
-        level=logging.INFO,
-        format='%(message)s'
-    )
-
-def log(msg, add_date = False):
-    msg += f' {datetime.today().strftime("%y-%m-%d %H:%M")}' if add_date else ""
-    logging.info(msg)
+from modules import log
 
 def ask_add_comment():
     comment = input('Comment to add to log[no-comments]: ')
     if comment:
-        logging.info(f'* Comments: {comment}')
+        log.add(f'* Comments: {comment}')
 
 def get_steps(pipeline):
     steps = []
@@ -26,7 +14,7 @@ def get_steps(pipeline):
         for n, line in enumerate(fhandle):
             line = line.strip().split(',')
             if len(line) != 2:
-                logging.info(f'# Error parsing {pipeline}. Line: {n} - {(",").join(line)} {datetime.today().strftime("%y-%m-%d %H:%M")}')
+                log.add(f'# Error parsing {pipeline}. Line: {n} - {(",").join(line)}', True)
                 sys.exit(f'Error parsing {pipeline}. Line: {n} - {(",").join(line)}')
             name, command = line
             step = Step(name, command)
