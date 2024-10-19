@@ -50,5 +50,8 @@ class Step:
         if self.created_files:
             log.add(f'* New files: {(" ").join(self.created_files)}')
 
+    def print_info(self):
+        print(f'Step: {self.name}\nCmd: {self.command}')
+
     def __repr__(self):
         return self.name
