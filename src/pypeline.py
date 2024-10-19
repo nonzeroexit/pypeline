@@ -8,10 +8,16 @@ def run_pipeline(pipeline_filename):
     used_params = {}
     for step in steps:
         step.print_info()
-        if utils.ask_skip_step(step):
-            log.add(f'## Skipping step {step.name}')
-            continue
-        step.run_step(used_params)
+        option = utils.ask_what_to_do(step)
+        match option:
+            case 'modify_cmd':
+                pass
+            case 'skip':
+                continue
+            case 'run':
+                step.run_step(used_params)
+            case 'exit':
+                pass
         utils.ask_add_comment()
         used_params = {**used_params, **step.params}
 
