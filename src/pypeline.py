@@ -3,17 +3,11 @@ import sys
 from modules import utils
 from modules import log
 
-def main():
-    pipeline = sys.argv[1]
-    log.start(pipeline)
-    steps = utils.get_steps(pipeline)
-    log.add(f'# Starting pipeline {pipeline.replace(".csv", "")}', True)
-    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
-    used_params = {}
-    n_step = 0
+def run_pipeline(pipeline_filename):
+    steps = utils.get_steps(pipeline_filename)
     while n_step < len(steps):
         step = steps[n_step]
-        print(f'Starting step {step.name}')
+        step.print_info()
         if utils.ask_skip_step(step):
             log.add(f'## Skipping step {step.name}')
             n_step += 1
@@ -30,8 +24,15 @@ def main():
             pass
         n_step += retry_next
         used_params = {**used_params, **step.params}
-    print(f'Finished pipeline {pipeline.replace(".csv", "")}')
-    log.add(f'# Finished pipeline {pipeline.replace(".csv", "")}', True)
+
+def main():
+    pipeline_filename = sys.argv[1]
+    log.start(pipeline_filename)
+    log.add(f'# Starting pipeline {pipeline_filename.replace(".csv", "")}', True)
+    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
+    run_pipeline(pipeline_filename)
+    print(f'Finished pipeline {pipeline_filename.replace(".csv", "")}')
+    log.add(f'# Finished pipeline {pipeline_filename.replace(".csv", "")}', True)
     utils.ask_files_to_delete(files_at_start)
 
 if __name__ == '__main__':
