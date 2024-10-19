@@ -7,17 +7,19 @@ def run_pipeline(pipeline_filename):
     steps = utils.get_steps(pipeline_filename)
     used_params = {}
     for step in steps:
-        step.print_info()
-        option = utils.ask_what_to_do(step)
-        match option:
-            case 'modify_cmd':
-                pass
-            case 'skip':
-                continue
-            case 'run':
-                step.run_step(used_params)
-            case 'exit':
-                pass
+        while True:
+            step.print_info()
+            option = utils.ask_what_to_do(step)
+            match option:
+                case 'run':
+                    step.run_step(used_params)
+                    break
+                case 'modify_cmd':
+                    step.change_command()
+                case 'skip':
+                    continue
+                case 'exit':
+                    sys.exit(0)
         utils.ask_add_comment()
         used_params = {**used_params, **step.params}
 
