@@ -28,10 +28,5 @@ def ask_files_to_delete(files_at_start):
         if input(f'Delete {xfile}?[n]: ') == 'y':
             os.remove(xfile)
 
-def ask_retry_next(steps, n_step):
-    if len(steps) == n_step+1:
-        return 0 if input(f'[R]etry last step {steps[n_step]} or [f]inish?[f]: ') == 'r' else 1
-    return 0 if input(f'[R]etry last step ({steps[n_step]}) or go to [n]ext step ({steps[n_step+1]})[n]: ') == 'r' else 1
-
 def ask_skip_step(step):
     return input(f'Want to skip this step? ({step.name})[n]: ') == 'y'
