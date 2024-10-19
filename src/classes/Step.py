@@ -33,10 +33,6 @@ class Step:
         log.add(f'* Error: {exit_code}', True)
         sys.exit(f'Error code: {exit_code}')
 
-    def delete_created_files(self):
-        for xfile in self.created_files:
-            os.remove(xfile)
-
     def print_info(self):
         print(f'Step: {self.name}\nCmd: {self.command}')
 

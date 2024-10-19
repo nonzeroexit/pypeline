@@ -35,6 +35,3 @@ def ask_what_to_do(step):
         if option in options:
             return options.get(option)
         print('Wrong option, try again')
-
-def ask_skip_step(step):
-    return input(f'Want to skip this step? ({step.name})[n]: ') == 'y'

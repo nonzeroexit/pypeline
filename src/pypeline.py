@@ -31,7 +31,7 @@ def main():
     log.start(pipeline_filename)
     log.add(f'# Starting pipeline {pipeline_filename.replace(".csv", "")}', True)
     run_pipeline(pipeline_filename)
-    log.add(f'# Finished pipeline {pipeline_filename.replace(".csv", "")}', True)
+    log.add(f'# Pipeline finished successfully {pipeline_filename.replace(".csv", "")}', True)
     utils.ask_files_to_delete(files_at_start)
 
 if __name__ == '__main__':
