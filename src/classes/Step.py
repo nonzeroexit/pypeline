@@ -30,14 +30,14 @@ class Step:
     def write_to_log(self):
         log.add(f'* Command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
         if self.created_files:
-            log.add(f'* New files: {(" ").join(self.created_files)}')
+            log.add(f'* Created files: {(" ").join(self.created_files)}')
 
     def error(self, exit_code):
         log.add(f'* **Error** Exit code: {exit_code}', True)
         sys.exit(f'Error code: {exit_code}')
 
     def print_info(self):
-        print(f'Step: {self.name}\nCmd: {self.command}')
+        print(f'Step: {self.name}\nCommand: {self.command}')
 
     def __repr__(self):
         return self.name
