@@ -8,25 +8,26 @@ def ask_add_comment():
     if comment:
         log.add(f'* Comments: {comment}')
 
-def get_steps(pipeline):
+def get_steps(pipeline_filename):
     steps = []
-    with open(pipeline, 'r', encoding='utf-8') as fhandle:
+    with open(pipeline_filename, 'r', encoding='utf-8') as fhandle:
         for n, line in enumerate(fhandle):
             line = line.strip().split(',')
             if len(line) != 2:
-                log.add(f'# Error parsing {pipeline}. Line: {n} - {(",").join(line)}', True)
-                sys.exit(f'Error parsing {pipeline}. Line: {n} - {(",").join(line)}')
+                log.add(f'* Error parsing {pipeline_filename}. Line: {n} - {(",").join(line)}')
+                sys.exit(f'Error parsing {pipeline_filename}. Line: {n} - {(",").join(line)}')
             name, command = line
             step = Step(name, command)
             steps.append(step)
     return steps
 
 def ask_files_to_delete(files_at_start):
-    print('Delete created files...')
-    files = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile) and xfile not in files_at_start]
-    for xfile in files:
-        if input(f'Delete {xfile}?[n]: ') == 'y':
-            os.remove(xfile)
+    created_files = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile) and xfile not in files_at_start]
+    if created_files:
+        print('Delete created files...')
+        for xfile in created_files:
+            if input(f'Delete {xfile}?[n]: ') == 'y':
+                os.remove(xfile)
 
 def ask_what_to_do(step):
     options = {'m': 'modify_cmd', 's': 'skip', 'r': 'run', 'e': 'exit'}
