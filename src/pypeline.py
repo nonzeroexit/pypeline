@@ -12,12 +12,14 @@ def run_pipeline(pipeline_filename):
             option = utils.ask_what_to_do(step)
             match option:
                 case 'run':
+                    step.get_params(used_params)
                     step.run_step(used_params)
                     break
                 case 'modify_cmd':
                     step.change_command()
-                case 'skip':
                     continue
+                case 'skip':
+                    break
                 case 'exit':
                     sys.exit(0)
         utils.ask_add_comment()
@@ -25,11 +27,10 @@ def run_pipeline(pipeline_filename):
 
 def main():
     pipeline_filename = sys.argv[1]
+    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
     log.start(pipeline_filename)
     log.add(f'# Starting pipeline {pipeline_filename.replace(".csv", "")}', True)
-    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
     run_pipeline(pipeline_filename)
-    print(f'Finished pipeline {pipeline_filename.replace(".csv", "")}')
     log.add(f'# Finished pipeline {pipeline_filename.replace(".csv", "")}', True)
     utils.ask_files_to_delete(files_at_start)
 
