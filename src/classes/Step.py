@@ -6,6 +6,7 @@ class Step:
     def __init__(self, name, command):
         self.name = name
         self.command = command # change to a better name (and final_command too)
+        self.command_was_changed = False
 
     def get_params(self, used_params):
         self.final_command = self.command
