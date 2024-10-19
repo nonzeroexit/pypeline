@@ -30,7 +30,7 @@ def run_pipeline(pipeline_filename):
         used_params = {**used_params, **step.params}
 
 def main():
-    pipeline_filename = sys.argv[1]
+    pipeline_filename = utils.get_pipeline_path()
     log.start(pipeline_filename)
     log.add(f'# Starting pipeline {pipeline_filename.replace(".csv", "")}', True)
     files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]

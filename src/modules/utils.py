@@ -8,6 +8,15 @@ def ask_add_comment():
     if comment:
         log.add(f'* Comments: {comment}')
 
+def get_pipeline_path():
+    if len(sys.argv) < 2:
+        sys.exit(f'usage:\n  pypeline pipeline_file')
+    if not os.path.isfile(sys.argv[1]):
+        sys.exit(f'{sys.argv[1]} not found')
+    if not sys.argv[1].endswith('.csv'):
+        sys.exit(f'{sys.argv[1]} not a .csv file')
+    return sys.argv[1]
+
 def get_steps(pipeline_filename):
     steps = []
     with open(pipeline_filename, 'r', encoding='utf-8') as fhandle:
