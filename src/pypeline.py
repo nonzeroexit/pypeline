@@ -27,8 +27,8 @@ def run_pipeline(pipeline):
 
 def main():
     pipeline_filename = utils.get_pipeline_path()
-    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
     pipeline = Pipeline(pipeline_filename)
+    files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
     run_pipeline(pipeline)
     utils.ask_files_to_delete(files_at_start)
 
