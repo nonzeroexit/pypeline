@@ -4,9 +4,7 @@ from classes.Pipeline import Pipeline
 from modules import utils
 from modules import log
 
-def run_pipeline(pipeline_filename):
-    steps = utils.get_steps(pipeline_filename)
-    pipeline = Pipeline(steps)
+def run_pipeline(pipeline):
     while pipeline.step_index < len(pipeline):
         pipeline.print_step_info()
         option = pipeline.ask_what_to_do()
@@ -24,16 +22,14 @@ def run_pipeline(pipeline_filename):
                 pipeline.previous_step()
                 continue
             case 'exit':
-                log.add('**Pipeline ended**')
-                sys.exit(0)
+                pipeline.exit()
+    pipeline.finished()
 
 def main():
     pipeline_filename = utils.get_pipeline_path()
-    log.start(pipeline_filename)
-    log.add('# Starting pipeline', True)
     files_at_start = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
-    run_pipeline(pipeline_filename)
-    log.add('# Pipeline finished successfully', True)
+    pipeline = Pipeline(pipeline_filename)
+    run_pipeline(pipeline)
     utils.ask_files_to_delete(files_at_start)
 
 if __name__ == '__main__':

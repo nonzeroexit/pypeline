@@ -3,7 +3,7 @@ from datetime import datetime
 
 def start(pipeline_name):
     logging.basicConfig(
-        filename=pipeline_name.replace('.csv', '-log.md'),
+        filename=f'{pipeline_name}-log.md',
         level=logging.INFO,
         format='%(message)s'
     )

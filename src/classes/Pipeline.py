@@ -1,11 +1,30 @@
+import sys
+from classes.Step import Step
 from modules import log
 
 class Pipeline:
-    def __init__(self, steps):
-        self.steps = steps
+    def __init__(self, filename):
+        self.filename = filename
+        self.name = filename.replace('.csv', '')
+        self.steps = self.get_steps()
         self.step = self.steps[0]
         self.params = {}
         self.step_index = 0
+        log.start(self.name)
+        log.add('# Starting pipeline', True)
+
+    def get_steps(self):
+        steps = []
+        with open(self.filename, 'r', encoding='utf-8') as fhandle:
+            for n, line in enumerate(fhandle):
+                line = line.strip().split(',')
+                if len(line) != 2:
+                    log.add(f'* Error parsing {self.filename}. Line: {n} - {(",").join(line)}')
+                    sys.exit(f'Error parsing {self.filename}. Line: {n} - {(",").join(line)}')
+                name, command = line
+                step = Step(name, command)
+                steps.append(step)
+        return steps
 
     def next_step(self):
         self.step_index += 1
@@ -30,6 +49,13 @@ class Pipeline:
 
     def change_step_command(self):
         self.step.change_command()
+
+    def finished(self):
+        log.add('# Pipeline finished successfully', True)
+
+    def exit(self):
+        log.add('**Pipeline ended**')
+        sys.exit(0)
 
     def ask_what_to_do(self):
         options = {
