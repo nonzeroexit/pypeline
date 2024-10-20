@@ -8,20 +8,14 @@ def run_pipeline(pipeline_filename):
     steps = utils.get_steps(pipeline_filename)
     pipeline = Pipeline(steps)
     while pipeline.step_index < len(pipeline):
-        step = steps[pipeline.step_index]
-        step.print_info(pipeline.params)
-        option = utils.ask_what_to_do(step)
+        pipeline.print_step_info()
+        option = pipeline.ask_what_to_do()
         match option:
             case 'run':
-                log.add(f'## Step {step.name}', True)
-                step.get_params(pipeline.params)
-                step.run()
-                step.write_to_log()
-                utils.ask_add_comment()
-                pipeline.params = {**pipeline.params, **step.params}
+                pipeline.run_step()
                 pipeline.next_step()
             case 'modify_cmd':
-                step.change_command()
+                pipeline.change_step_command()
                 continue
             case 'skip':
                 pipeline.next_step()

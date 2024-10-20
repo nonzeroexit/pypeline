@@ -3,11 +3,6 @@ import sys
 from classes.Step import Step
 from modules import log
 
-def ask_add_comment():
-    comment = input('Comment to add to log[no-comments]: ')
-    if comment:
-        log.add(f'* Comments: {comment}')
-
 def get_pipeline_path():
     if len(sys.argv) < 2:
         sys.exit(f'usage:\n  pypeline pipeline_file')
@@ -37,17 +32,3 @@ def ask_files_to_delete(files_at_start):
         for xfile in created_files:
             if input(f'Delete {xfile}?[n]: ') == 'y':
                 os.remove(xfile)
-
-def ask_what_to_do(step):
-    options = {
-        'm': 'modify_cmd',
-        's': 'skip',
-        'p': 'previous',
-        'r': 'run',
-        'e': 'exit'
-    }
-    while True:
-        option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command or [e]xit?: ').lower()
-        if option in options:
-            return options.get(option)
-        print('Wrong option, try again')
