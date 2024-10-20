@@ -36,8 +36,11 @@ class Step:
         log.add(f'* **Error** Exit code: {exit_code}', True)
         sys.exit(f'Error code: {exit_code}')
 
-    def print_info(self):
-        print(f'Step: {self.name}\nCommand: {self.command}')
+    def print_info(self, used_params):
+        print(f'Step: {self.name}')
+        print(f'Command: {self.command}')
+        if any([param in self.command.split() for param in used_params]):
+            print(f'Used params: {(", ").join([f"{param} = {value}" for param, value in used_params.items() if param in self.command.split()])}')
 
     def __repr__(self):
         return self.name

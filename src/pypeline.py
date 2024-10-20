@@ -9,7 +9,7 @@ def run_pipeline(pipeline_filename):
     for step in steps:
         log.add(f'## Step {step.name}', True)
         while True:
-            step.print_info()
+            step.print_info(used_params)
             option = utils.ask_what_to_do(step)
             match option:
                 case 'run':
