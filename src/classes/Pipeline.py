@@ -39,7 +39,7 @@ class Pipeline:
     def print_step_info(self):
         self.step.print_info(self.params)
 
-    def run_step(self):
+    def run_step(self): #TODO log the generic command with %params
         self.step.get_params(self.params)
         self.step.run()
         self.step.write_to_log()
@@ -50,7 +50,7 @@ class Pipeline:
         self.step.change_command()
 
     def finished(self):
-        log.add('# Pipeline finished successfully', True)
+        log.add('**Pipeline finished successfully**', True)
 
     def exit(self):
         log.add('**Pipeline ended**')

@@ -30,14 +30,14 @@ class Step:
         self.created_files = [xfile for xfile in os.listdir(os.curdir) if xfile not in files_before and os.path.isfile(xfile)]
 
     def write_to_log(self):
-        log.add(f'* Command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
+        log.add(f'* Used command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
         if self.created_files:
             log.add(f'* Created files: {(" ").join(self.created_files)}')
         if self.params:
             log.add(f'* Used params: {(", ").join([(" = ").join((param, value)) for param,value in self.params.items()])}')
 
     def error(self, exit_code):
-        log.add(f'* **Error** Exit code: {exit_code}', True)
+        log.add(f'**Error** Exit code: {exit_code}', True)
         sys.exit(f'Error code: {exit_code}')
 
     def print_info(self, used_params):
