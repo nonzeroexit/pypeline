@@ -39,9 +39,15 @@ def ask_files_to_delete(files_at_start):
                 os.remove(xfile)
 
 def ask_what_to_do(step):
-    options = {'m': 'modify_cmd', 's': 'skip', 'r': 'run', 'e': 'exit'}
+    options = {
+        'm': 'modify_cmd',
+        's': 'skip',
+        'p': 'previous',
+        'r': 'run',
+        'e': 'exit'
+    }
     while True:
-        option = input('[M]odify command, [s]kip step, [r]un command or [e]xit?: ').lower()
+        option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command or [e]xit?: ').lower()
         if option in options:
             return options.get(option)
         print('Wrong option, try again')

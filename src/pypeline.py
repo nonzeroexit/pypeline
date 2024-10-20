@@ -26,6 +26,9 @@ def run_pipeline(pipeline_filename):
             case 'skip':
                 pipeline.next_step()
                 continue
+            case 'previous':
+                pipeline.previous_step()
+                continue
             case 'exit':
                 log.add('**Pipeline ended**')
                 sys.exit(0)
