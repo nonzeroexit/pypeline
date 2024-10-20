@@ -21,7 +21,7 @@ def run_pipeline(pipeline_filename):
                     step.change_command()
                     continue
                 case 'skip':
-                    log.add('* **Skiped step**')
+                    log.add('* **Skipped step**')
                     break
                 case 'exit':
                     log.add('* **Pipeline ended**')
