@@ -39,7 +39,7 @@ class Pipeline:
     def print_step_info(self):
         self.step.print_info(self.params)
 
-    def run_step(self): #TODO log the generic command with %params
+    def run_step(self):
         log.add(f'## Step: {self.step.name}', True)
         self.step.get_params(self.params)
         exit_code = self.step.run()
