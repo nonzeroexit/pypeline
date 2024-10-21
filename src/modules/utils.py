@@ -20,8 +20,6 @@ def get_pipeline_path():
         make_pipeline(pipeline_file_path)
         return pipeline_file_path
 
-    return sys.argv[1]
-
 def ask_files_to_delete(files_at_start):
     created_files = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile) and xfile not in files_at_start]
     if created_files:
