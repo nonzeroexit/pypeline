@@ -13,17 +13,14 @@ def run_pipeline(pipeline):
                     pipeline.clean_step()
                     continue
                 pipeline.next_step()
-            case 'clean':
-                pipeline.clean_params()
-            case 'modify_cmd':
-                pipeline.change_step_command()
-                continue
             case 'skip':
                 pipeline.next_step()
-                continue
             case 'previous':
                 pipeline.previous_step()
-                continue
+            case 'modify_cmd':
+                pipeline.change_step_command()
+            case 'clean':
+                pipeline.clean_params()
             case 'exit':
                 pipeline.exit()
     pipeline.finished()
