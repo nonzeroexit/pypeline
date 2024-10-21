@@ -2,14 +2,24 @@ import os
 import sys
 from classes.Step import Step
 from modules import log
+from modules.make_pipeline import main as make_pipeline
 
 def get_pipeline_path():
-    if len(sys.argv) < 2:
-        sys.exit(f'usage:\n  pypeline pipeline_file')
-    if not os.path.isfile(sys.argv[1]):
-        sys.exit(f'{sys.argv[1]} not found')
-    if not sys.argv[1].endswith('.csv'):
-        sys.exit(f'{sys.argv[1]} not a .csv file')
+    if len(sys.argv) < 3 or sys.argv[1] not in ['run', 'make']:
+        sys.exit(f'usage:\n  pypeline run/make pipeline_file/pipeline_name')
+    option = sys.argv[1] # run or make
+    if option == 'run':
+        pipeline_file_path = sys.argv[2]
+        if not os.path.isfile(pipeline_file_path):
+            sys.exit(f'{pipeline_file_path} not found')
+        if not pipeline_file_path.endswith('.csv'):
+            sys.exit(f'{pipeline_file_path} in wrong file type (has to be a .csv file)')
+        return pipeline_file_path
+    if option == 'make':
+        pipeline_file_path = sys.argv[2] if sys.argv[2].endswith('.csv') else f'{sys.argv[2]}.csv'
+        make_pipeline(pipeline_file_path)
+        return pipeline_file_path
+
     return sys.argv[1]
 
 def ask_files_to_delete(files_at_start):
