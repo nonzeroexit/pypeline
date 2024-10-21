@@ -28,13 +28,14 @@ class Step:
         return exit_code
 
     def write_to_log(self, exit_code):
+        log.add(f'* Used command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
         if exit_code != 0:
             log.add(f'**NON-ZERO EXIT STATUS** Exit code: {exit_code}')
-        log.add(f'* Used command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
-        if self.created_files and exit_code == 0: # if non-zero exit, created files will be deleted
-            log.add(f'* Created files: {(" ").join(self.created_files)}')
-        if self.params:
-            log.add(f'* Used params: {(", ").join([(" = ").join((param, value)) for param,value in self.params.items()])}')
+        else:
+            if self.created_files: # if non-zero exit, created files will be deleted
+                log.add(f'* Created files: {(" ").join(self.created_files)}')
+            if self.params:
+                log.add(f'* Used params: {(", ").join([(" = ").join((param, value)) for param,value in self.params.items()])}')
 
     def clean_to_retry(self):
         self.params = {}
