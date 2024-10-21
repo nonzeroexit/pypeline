@@ -72,13 +72,19 @@ class Pipeline:
             's': 'skip',
             'p': 'previous',
             'r': 'run',
+            'c': 'clean',
             'e': 'exit'
         }
         while True:
-            option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command or [e]xit?: ').lower()
+            option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command, [c]lean params or [e]xit?: ').lower()
             if option in options:
                 return options.get(option)
             utils.print_w_format('Wrong option, try again', 'bold', 'red')
+
+    def clean_params(self):
+        self.params = {}
+        for step in self.steps:
+            step.params = {}
 
     def __len__(self):
         return len(self.steps)

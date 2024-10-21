@@ -13,6 +13,8 @@ def run_pipeline(pipeline):
                     pipeline.clean_step()
                     continue
                 pipeline.next_step()
+            case 'clean':
+                pipeline.clean_params()
             case 'modify_cmd':
                 pipeline.change_step_command()
                 continue
