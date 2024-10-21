@@ -5,6 +5,7 @@ from modules import utils
 from modules import log
 
 #TODO implement prints with colors
+#TODO make_pipeline module
 
 def run_pipeline(pipeline):
     while pipeline.step_index < len(pipeline):
