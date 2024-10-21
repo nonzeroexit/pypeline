@@ -8,6 +8,7 @@ class Step:
         self.command = command
         self.used_command = ''
         self.params = {}
+        self.created_files = []
         self.command_was_changed = False
 
     def get_params(self, pipeline_params):
