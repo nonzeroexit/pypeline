@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 from classes.Pipeline import Pipeline
 from modules import utils
