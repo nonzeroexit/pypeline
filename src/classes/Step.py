@@ -10,11 +10,6 @@ class Step:
         self.params = {}
         self.command_was_changed = False
 
-    def change_command(self):
-        utils.print_w_format('Set new command...', 'yellow')
-        self.command = input('New command: ')
-        self.command_was_changed = True
-
     def get_params(self, pipeline_params):
         used_params = {param: value for param, value in pipeline_params.items() if param in self.command.split()}
         utils.print_w_format('Set params...', 'yellow')
@@ -27,6 +22,11 @@ class Step:
         exit_code = os.system(self.used_command)
         self.created_files = [xfile for xfile in os.listdir(os.curdir) if xfile not in files_before and os.path.isfile(xfile)]
         return exit_code
+
+    def change_command(self):
+        utils.print_w_format('Set new command...', 'yellow')
+        self.command = input('New command: ')
+        self.command_was_changed = True
 
     def write_to_log(self, exit_code):
         log.add(f'* Command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')

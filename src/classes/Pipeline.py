@@ -27,18 +27,20 @@ class Pipeline:
                 steps.append(step)
         return steps
 
-    def next_step(self):
-        self.step_index += 1
-        if self.step_index < len(self):
-            self.step = self.steps[self.step_index]
-
-    def previous_step(self):
-        if self.step_index > 0:
-            self.step_index -= 1
-            self.step = self.steps[self.step_index]
-
-    def print_step_info(self):
-        self.step.print_info(self.params)
+    def ask_what_to_do(self):
+        options = {
+            'r': 'run_step',
+            'm': 'modify_step_cmd',
+            's': 'skip_step',
+            'p': 'previous_step',
+            'c': 'clean_params',
+            'e': 'exit'
+        }
+        while True:
+            option = input('[R]un command, [m]odify command, [s]kip step, [p]revious step, [c]lean params or [e]xit?: ').lower()
+            if option in options:
+                return options.get(option)
+            utils.print_w_format('Wrong option, try again', 'bold', 'red')
 
     def run_step(self):
         log.add(f'## Step: {self.step.name}', True)
@@ -53,6 +55,19 @@ class Pipeline:
         self.params = {**self.params, **self.step.params} # if error dont add step params to pipeline params
         return True
 
+    def next_step(self):
+        self.step_index += 1
+        if self.step_index < len(self):
+            self.step = self.steps[self.step_index]
+
+    def previous_step(self):
+        if self.step_index > 0:
+            self.step_index -= 1
+            self.step = self.steps[self.step_index]
+
+    def print_step_info(self):
+        self.step.print_info(self.params)
+
     def clean_step(self):
         self.step.clean_to_retry()
 
@@ -62,29 +77,14 @@ class Pipeline:
     def finished(self):
         log.add('**Pipeline finished successfully**', True)
 
-    def exit(self):
-        log.add('**Pipeline ended**')
-        sys.exit(0)
-
-    def ask_what_to_do(self):
-        options = {
-            'm': 'modify_cmd',
-            's': 'skip',
-            'p': 'previous',
-            'r': 'run',
-            'c': 'clean',
-            'e': 'exit'
-        }
-        while True:
-            option = input('[R]un command, [m]odify command, [s]kip step, [p]revious step, [c]lean params or [e]xit?: ').lower()
-            if option in options:
-                return options.get(option)
-            utils.print_w_format('Wrong option, try again', 'bold', 'red')
-
     def clean_params(self):
         self.params = {}
         for step in self.steps:
             step.params = {}
+
+    def exit(self):
+        log.add('**Pipeline ended**')
+        sys.exit(0)
 
     def __len__(self):
         return len(self.steps)

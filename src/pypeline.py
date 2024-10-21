@@ -7,19 +7,19 @@ def run_pipeline(pipeline):
         pipeline.print_step_info()
         option = pipeline.ask_what_to_do()
         match option:
-            case 'run':
+            case 'run_step':
                 success = pipeline.run_step()
                 if not success:
                     pipeline.clean_step()
                     continue
                 pipeline.next_step()
-            case 'skip':
-                pipeline.next_step()
-            case 'previous':
-                pipeline.previous_step()
-            case 'modify_cmd':
+            case 'modify_step_cmd':
                 pipeline.change_step_command()
-            case 'clean':
+            case 'skip_step':
+                pipeline.next_step()
+            case 'previous_step':
+                pipeline.previous_step()
+            case 'clean_params':
                 pipeline.clean_params()
             case 'exit':
                 pipeline.exit()
