@@ -18,9 +18,7 @@ class Step:
         print('Set params...')
         new_params = {param: input(f'{param}: ') for param in self.command.split() if param.startswith('%') and param not in used_params}
         self.params = {**used_params, **new_params}
-        self.used_command = self.command
-        for param, value in self.params.items():
-            self.used_command = self.used_command.replace(param, value)
+        self.used_command = (' ').join([self.params[word] if word in self.params else word for word in self.command.split()])
 
     def run(self):
         files_before = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
