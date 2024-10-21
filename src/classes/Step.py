@@ -33,11 +33,8 @@ class Step:
         log.add(f'* Used command: {self.used_command}')
         if self.params:
             log.add(f'* Used params: {(", ").join([(" = ").join((param, value)) for param,value in self.params.items()])}')
-        if exit_code != 0:
-            log.add(f'**NON-ZERO EXIT STATUS** Exit code: {exit_code}')
-        else:
-            if self.created_files: # if non-zero exit, created files will be deleted
-                log.add(f'* Created files: {(" ").join(self.created_files)}')
+        if self.created_files and exit_code == 0: # if non-zero exit, created files will be deleted
+            log.add(f'* Created files: {(" ").join(self.created_files)}')
 
     def clean_to_retry(self):
         self.params = {}

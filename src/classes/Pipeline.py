@@ -21,7 +21,6 @@ class Pipeline:
             for n, line in enumerate(fhandle):
                 line = line.strip().split(',')
                 if len(line) != 2:
-                    log.add(f'* Error parsing {self.filename}. Line: {n} - {(",").join(line)}')
                     sys.exit(f'Error parsing {self.filename}. Line: {n} - {(",").join(line)}')
                 name, command = line
                 step = Step(name, command)
@@ -47,10 +46,11 @@ class Pipeline:
         exit_code = self.step.run()
         self.step.write_to_log(exit_code)
         if exit_code != 0:
+            log.add(f'**NON-ZERO EXIT STATUS** Exit code: {exit_code}')
             utils.print_w_format(f'**Error** Exit code: {exit_code}. Params will be reset.', 'bold', 'red')
             return False
         log.ask_add_comment()
-        self.params = {**self.params, **self.step.params}
+        self.params = {**self.params, **self.step.params} # if error dont add step params to pipeline params
         return True
 
     def clean_step(self):
