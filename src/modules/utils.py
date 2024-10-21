@@ -21,7 +21,17 @@ def get_pipeline_path():
 def ask_files_to_delete(files_at_start):
     created_files = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile) and xfile not in files_at_start]
     if created_files:
-        print('Delete created files?')
+        print_w_format('Delete created files?', 'yellow')
         for xfile in created_files:
             if input(f'Delete {xfile}?[n]: ').lower() == 'y':
                 os.remove(xfile)
+
+def print_w_format(text, *formats_list):
+    formats = {
+        'bold': '\x1b[1m',
+        'green': '\033[92m',
+        'red':  '\033[91m',
+        'yellow':  '\033[33m',
+        'end': '\x1b[0m'
+    }
+    print(f'{("").join([formats[format] for format in formats_list])}{text}{formats["end"]}')

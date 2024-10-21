@@ -1,6 +1,7 @@
 import sys
 from classes.Step import Step
 from modules import log
+from modules import utils
 
 class Pipeline:
     def __init__(self, filename):
@@ -12,6 +13,7 @@ class Pipeline:
         self.step_index = 0
         log.start(self.name)
         log.add('# Starting pipeline', True)
+        utils.print_w_format('# Starting pipeline', 'bold', 'green')
 
     def get_steps(self):
         steps = []
@@ -45,7 +47,7 @@ class Pipeline:
         exit_code = self.step.run()
         self.step.write_to_log(exit_code)
         if exit_code != 0:
-            print(f'Error. Exit code: {exit_code}. Params will be reset.')
+            utils.print_w_format(f'**Error** Exit code: {exit_code}. Params will be reset.', 'bold', 'red')
             return False
         log.ask_add_comment()
         self.params = {**self.params, **self.step.params}
@@ -76,7 +78,7 @@ class Pipeline:
             option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command or [e]xit?: ').lower()
             if option in options:
                 return options.get(option)
-            print('Wrong option, try again')
+            utils.print_w_format('Wrong option, try again', 'bold', 'red')
 
     def __len__(self):
         return len(self.steps)

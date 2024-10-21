@@ -2,8 +2,6 @@ import os
 from classes.Pipeline import Pipeline
 from modules import utils
 
-#TODO implement prints with colors
-
 def run_pipeline(pipeline):
     while pipeline.step_index < len(pipeline):
         pipeline.print_step_info()
