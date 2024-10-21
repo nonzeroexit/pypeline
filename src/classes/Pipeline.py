@@ -76,7 +76,7 @@ class Pipeline:
             'e': 'exit'
         }
         while True:
-            option = input('[M]odify command, [s]kip step, [p]revious step, [r]un command, [c]lean params or [e]xit?: ').lower()
+            option = input('[R]un command, [m]odify command, [s]kip step, [p]revious step, [c]lean params or [e]xit?: ').lower()
             if option in options:
                 return options.get(option)
             utils.print_w_format('Wrong option, try again', 'bold', 'red')
