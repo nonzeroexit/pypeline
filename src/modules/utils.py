@@ -16,7 +16,7 @@ def get_pipeline_path():
             sys.exit(f'{pipeline_file_path} in wrong file type (has to be a .csv file)')
         return pipeline_file_path
     if option == 'make':
-        pipeline_file_path = sys.argv[2] if sys.argv[2].endswith('.csv') else f'{sys.argv[2]}.csv'
+        pipeline_file_path = sys.argv[2].replace(' ', '_') if sys.argv[2].endswith('.csv') else f'{sys.argv[2]}.csv'
         make_pipeline(pipeline_file_path)
         return pipeline_file_path
 
