@@ -12,7 +12,10 @@ def run_pipeline(pipeline):
         option = pipeline.ask_what_to_do()
         match option:
             case 'run':
-                pipeline.run_step()
+                success = pipeline.run_step()
+                if not success:
+                    pipeline.clean_step()
+                    continue
                 pipeline.next_step()
             case 'modify_cmd':
                 pipeline.change_step_command()

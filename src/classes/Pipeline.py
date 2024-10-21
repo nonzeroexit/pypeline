@@ -42,10 +42,17 @@ class Pipeline:
     def run_step(self): #TODO log the generic command with %params
         log.add(f'## Step: {self.step.name}', True)
         self.step.get_params(self.params)
-        self.step.run()
-        self.step.write_to_log()
+        exit_code = self.step.run()
+        self.step.write_to_log(exit_code)
+        if exit_code != 0:
+            print(f'Error. Exit code: {exit_code}. Params will be reset.')
+            return False
         log.ask_add_comment()
         self.params = {**self.params, **self.step.params}
+        return True
+
+    def clean_step(self):
+        self.step.clean_to_retry()
 
     def change_step_command(self):
         self.step.change_command()

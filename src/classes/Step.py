@@ -24,20 +24,22 @@ class Step:
     def run(self):
         files_before = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
         exit_code = os.system(self.command)
-        if exit_code != 0:
-            self.error(exit_code) #TODO should it just quit?
         self.created_files = [xfile for xfile in os.listdir(os.curdir) if xfile not in files_before and os.path.isfile(xfile)]
+        return exit_code
 
-    def write_to_log(self):
+    def write_to_log(self, exit_code):
+        if exit_code != 0:
+            log.add(f'**NON-ZERO EXIT STATUS** Exit code: {exit_code}')
         log.add(f'* Used command: {self.command} {"**COMMAND WAS CHANGED**" if self.command_was_changed else ""}')
-        if self.created_files:
+        if self.created_files and exit_code == 0: # if non-zero exit, created files will be deleted
             log.add(f'* Created files: {(" ").join(self.created_files)}')
         if self.params:
             log.add(f'* Used params: {(", ").join([(" = ").join((param, value)) for param,value in self.params.items()])}')
 
-    def error(self, exit_code):
-        log.add(f'**Error** Exit code: {exit_code}', True)
-        sys.exit(f'Error code: {exit_code}')
+    def clean_to_retry(self):
+        self.params = {}
+        for xfile in self.created_files:
+            os.remove(xfile)
 
     def print_info(self, used_params):
         print(f'Step: {self.name}')
