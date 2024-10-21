@@ -1,7 +1,5 @@
 import os
 import sys
-from classes.Step import Step
-from modules import log
 from modules.make_pipeline import main as make_pipeline
 
 def get_pipeline_path():

@@ -1,8 +1,6 @@
 import os
-import sys
 from classes.Pipeline import Pipeline
 from modules import utils
-from modules import log
 
 #TODO implement prints with colors
 
