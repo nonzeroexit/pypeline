@@ -22,7 +22,6 @@ class Step:
             self.command = self.command.replace(param, value)
 
     def run(self):
-        log.add(f'## Step: {self.name}', True)
         files_before = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
         exit_code = os.system(self.command)
         if exit_code != 0:
