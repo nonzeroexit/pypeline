@@ -17,5 +17,5 @@ def ask_files_to_delete(files_at_start):
     if created_files:
         print('Delete created files...')
         for xfile in created_files:
-            if input(f'Delete {xfile}?[n]: ') == 'y':
+            if input(f'Delete {xfile}?[n]: ').lower() == 'y':
                 os.remove(xfile)
