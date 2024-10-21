@@ -26,7 +26,7 @@ class Step:
         files_before = [xfile for xfile in os.listdir(os.curdir) if os.path.isfile(xfile)]
         exit_code = os.system(self.command)
         if exit_code != 0:
-            self.error(exit_code)
+            self.error(exit_code) #TODO should it just quit?
         self.created_files = [xfile for xfile in os.listdir(os.curdir) if xfile not in files_before and os.path.isfile(xfile)]
 
     def write_to_log(self):
